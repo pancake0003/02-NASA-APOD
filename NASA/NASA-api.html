@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Fetch Example</title>
+    <title>Astronomy Tower</title>
     <style>
         body {
             justify-content: center;
@@ -13,6 +13,11 @@
             background-image: url('./stars.gif');
             background-size: 50%;
             color: white;
+        }
+        #image-container {
+            align-content: center;
+            justify-content: center;
+            display: flex;
         }
 
         .inputs {
@@ -26,27 +31,52 @@
             font-size: 18px;
             padding: 5px;
         }
-        h5 {
-            font-size: 20px;
+        p {
+            text-align: center;
+            width: 45%;
+            font-size: 14px;
         }
+        #explanationContainer {
+            align-content: center;
+            justify-content: center;
+            display: flex;
+        }
+        #heading {
+            align-content: center;
+            justify-content: center;
+            display: flex;
+        }
+        h4 {
+            text-align: center;
+            justify-content: center;
+            display: flex;
+        }
+
     </style>
 </head>
 
 <body>
     <div>
-        <h3> ✨&nbsp;Gazing into the Galaxy... </h3>
+        <div id="heading">
+            <h3> ✨&nbsp;Gazing into the Galaxy... </h3>
+        </div>
         <div class="inputs">
             <input id="get" type="button" value="Get APOD!" />
         </div>
         <h4>📅&nbsp;<span id="date">No answer yet...</span></h4>
         <div id="image-container"></div>
-        <h5><span id="explanation"></span></h5>
+        <div id = "explanationContainer">
+            <p id="explanation"></p>
+        </div>
     </div>
     <script>
 
         const button = document.getElementById("get")
         const date = document.getElementById("date")
         const explanation = document.getElementById("explanation")
+        button.addEventListener("click", ()=> {
+            button.style.display = "none";
+        });
         button.addEventListener('click', fetchImage)
 
         async function fetchImage() {
@@ -65,12 +95,13 @@
                         error: e,
                     });
                 });
-            console.log ("RESPONSE: ", response)
-            console.log (response.url)
+            //console.log ("RESPONSE: ", response)
+            //console.log (response.url)
 
             //display image url
             let imageUrl = response.url
             const imageElement = document.createElement("img");
+            imageElement.style.width = "30%";
             imageElement.src = imageUrl;
             const container = document.getElementById("image-container");
             container.appendChild(imageElement);
