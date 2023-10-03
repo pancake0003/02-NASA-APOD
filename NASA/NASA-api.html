@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Fetch Example</title>
+    <style>
+        body {
+            justify-content: center;
+            align-content: center;
+            display: flex;
+            font-size: 24px;
+            font-family: monospace;
+            background-image: url('./stars.gif');
+            background-size: 50%;
+            color: white;
+        }
+
+        .inputs {
+            justify-content: center;
+            display: flex;
+            gap: 10px;
+        }
+
+        input {
+            font-family: monospace;
+            font-size: 18px;
+            padding: 5px;
+        }
+        h5 {
+            font-size: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h3> ✨&nbsp;Gazing into the Galaxy... </h3>
+        <div class="inputs">
+            <input id="get" type="button" value="Get APOD!" />
+        </div>
+        <h4>📅&nbsp;<span id="date">No answer yet...</span></h4>
+        <div id="image-container"></div>
+        <h5><span id="explanation"></span></h5>
+    </div>
+    <script>
+
+        const button = document.getElementById("get")
+        const date = document.getElementById("date")
+        const explanation = document.getElementById("explanation")
+        button.addEventListener('click', fetchImage)
+
+        async function fetchImage() {
+
+            let url = "https://api.nasa.gov/planetary/apod?api_key=IFZui13n7Gsf3Iyi03qB6c6OAdfMsseHOcvYTEJo"
+            //console.log(url)
+            const options = {
+                "method": "GET",
+            };
+
+            const response = await fetch (url, options)
+                .then (res => res.json( ))
+                .catch(e => {
+                    console.error ({
+                        "message": "oh noes",
+                        error: e,
+                    });
+                });
+            console.log ("RESPONSE: ", response)
+            console.log (response.url)
+
+            //display image url
+            let imageUrl = response.url
+            const imageElement = document.createElement("img");
+            imageElement.src = imageUrl;
+            const container = document.getElementById("image-container");
+            container.appendChild(imageElement);
+
+            explanation.innerHTML = response.explanation
+            date.innerHTML = response.date
+        }
+
+    </script>
+
+</body>
+
+</html>
